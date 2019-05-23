@@ -1,5 +1,6 @@
 package com.contest.schoolsuggestions.service;
 
+import com.contest.schoolsuggestions.controller.LoginTO;
 import com.contest.schoolsuggestions.controller.RegisterUserTO;
 import com.contest.schoolsuggestions.controller.UserInfoTO;
 import com.contest.schoolsuggestions.domain.User;
@@ -24,5 +25,14 @@ public class UserService {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user = userRepository.save(user);
         return new UserInfoTO(user.getId(), user.getName(), user.getStudentInfo());
+    }
+
+    public UserInfoTO login(LoginTO loginTO) {
+        UserInfoTO userInfoTO = null;
+        User user = userRepository.findByEmail(loginTO.getEmail());
+        if (user != null && bCryptPasswordEncoder.matches(loginTO.getPassword(), user.getPassword())) {
+            userInfoTO = new UserInfoTO(user.getId(), user.getName(), user.getStudentInfo());
+        }
+        return userInfoTO;
     }
 }
