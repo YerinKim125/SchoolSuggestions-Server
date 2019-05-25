@@ -13,7 +13,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/users/**").permitAll()
-                .antMatchers("/login").permitAll()z.anyRequest()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/issues").permitAll()
+                .antMatchers("/issues/**").permitAll().anyRequest()
                 .authenticated().and().csrf().disable();
     }
 }

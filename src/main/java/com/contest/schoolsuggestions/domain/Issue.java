@@ -8,7 +8,6 @@ import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 public class Issue {
 
@@ -18,4 +17,8 @@ public class Issue {
 
     @Column(columnDefinition = "varchar(200)", nullable = false)
     private String title;
+
+    public Issue(String title) {
+        this.title = title;
+    }
 }
