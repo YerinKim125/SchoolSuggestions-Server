@@ -4,6 +4,8 @@ import com.contest.schoolsuggestions.service.IssueService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin
 @AllArgsConstructor
 @RestController
@@ -25,5 +27,10 @@ public class IssueController {
     @PostMapping(value = "/{id}")
     public PostInfoTO writePost(@PathVariable Long id, @RequestBody WritePostTO writePostTO) {
         return issueService.writePost(id, writePostTO);
+    }
+
+    @GetMapping(value = "/{id}")
+    public List<PostInfoTO> getPostList(@PathVariable Long id) {
+        return issueService.getPostList(id);
     }
 }

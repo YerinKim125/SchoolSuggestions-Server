@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -48,5 +49,10 @@ public class IssueService {
                 .content(writePostTO.getContent()).build();
         post = postRepository.save(post);
         return new PostInfoTO(post);
+    }
+
+    public List<PostInfoTO> getPostList(Long id) {
+        List<Post> postList = postRepository.findAllByIssueId();
+        return postList.stream().map(PostInfoTO::new).collect(Collectors.toList());
     }
 }
