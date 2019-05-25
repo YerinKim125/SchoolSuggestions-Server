@@ -1,9 +1,6 @@
 package com.contest.schoolsuggestions.service;
 
-import com.contest.schoolsuggestions.controller.IssueInfoTO;
-import com.contest.schoolsuggestions.controller.PostInfoTO;
-import com.contest.schoolsuggestions.controller.WriteIssueTO;
-import com.contest.schoolsuggestions.controller.WritePostTO;
+import com.contest.schoolsuggestions.controller.*;
 import com.contest.schoolsuggestions.domain.Issue;
 import com.contest.schoolsuggestions.domain.Post;
 import com.contest.schoolsuggestions.repository.IssueRepository;
@@ -11,6 +8,7 @@ import com.contest.schoolsuggestions.repository.PostRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,5 +52,14 @@ public class IssueService {
     public List<PostInfoTO> getPostList(Long id) {
         List<Post> postList = postRepository.findAllByIssueIdOrderByIdDesc(id);
         return postList.stream().map(PostInfoTO::new).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public PostInfoTO updatePost(Long id, Long postId, UpdatePostTO updatePostTO) {
+        Post post = postRepository.findById(postId).orElseThrow();
+        post.setAgree(updatePostTO.getAgree());
+        post.setDisagree(updatePostTO.getDisagree());
+        post.setFeedback(updatePostTO.getFeedback());
+        return new PostInfoTO(post);
     }
 }

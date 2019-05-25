@@ -24,13 +24,18 @@ public class IssueController {
         return issueService.getIssue();
     }
 
-    @PostMapping(value = "/{id}")
+    @PostMapping(value = "/{id}/posts")
     public PostInfoTO writePost(@PathVariable Long id, @RequestBody WritePostTO writePostTO) {
         return issueService.writePost(id, writePostTO);
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/{id}/posts")
     public List<PostInfoTO> getPostList(@PathVariable Long id) {
         return issueService.getPostList(id);
+    }
+
+    @PutMapping(value = "/{id}/posts/{postId}")
+    public PostInfoTO writePost(@PathVariable Long id, @PathVariable Long postId, @RequestBody UpdatePostTO updatePostTO) {
+        return issueService.updatePost(id, postId, updatePostTO);
     }
 }
