@@ -52,7 +52,7 @@ public class IssueService {
     }
 
     public List<PostInfoTO> getPostList(Long id) {
-        List<Post> postList = postRepository.findAllByIssueId(id);
+        List<Post> postList = postRepository.findAllByIssueIdOrderByIdDesc(id);
         return postList.stream().map(PostInfoTO::new).collect(Collectors.toList());
     }
 }
