@@ -1,10 +1,13 @@
 package com.contest.schoolsuggestions.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -26,6 +29,10 @@ public class User {
 
     @Column(columnDefinition = "varchar(5)")
     private String studentInfo;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Post> postList = new ArrayList<>();
 
     @Builder
     public User(Long id, String email, String password, String name, String studentInfo) {
