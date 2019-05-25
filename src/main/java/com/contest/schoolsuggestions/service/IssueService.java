@@ -1,9 +1,13 @@
 package com.contest.schoolsuggestions.service;
 
 import com.contest.schoolsuggestions.controller.IssueInfoTO;
+import com.contest.schoolsuggestions.controller.PostInfoTO;
 import com.contest.schoolsuggestions.controller.WriteIssueTO;
+import com.contest.schoolsuggestions.controller.WritePostTO;
 import com.contest.schoolsuggestions.domain.Issue;
+import com.contest.schoolsuggestions.domain.Post;
 import com.contest.schoolsuggestions.repository.IssueRepository;
+import com.contest.schoolsuggestions.repository.PostRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +18,7 @@ import java.util.List;
 public class IssueService {
 
     private final IssueRepository issueRepository;
+    private final PostRepository postRepository;
 
     public IssueInfoTO writeIssue(WriteIssueTO writeIssueTO) {
         Issue issue = new Issue(writeIssueTO.getTitle());
@@ -33,5 +38,15 @@ public class IssueService {
         }
 
         return issueInfoTO;
+    }
+
+    public PostInfoTO writePost(Long id, WritePostTO writePostTO) {
+        Post post = Post.builder()
+                .userId(writePostTO.getUserId())
+                .issueId(id)
+                .title(writePostTO.getTitle())
+                .content(writePostTO.getContent()).build();
+        post = postRepository.save(post);
+        return new PostInfoTO(post);
     }
 }

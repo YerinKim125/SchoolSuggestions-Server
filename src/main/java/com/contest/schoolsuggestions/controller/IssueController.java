@@ -21,4 +21,9 @@ public class IssueController {
     public IssueInfoTO getIssue() {
         return issueService.getIssue();
     }
+
+    @PostMapping(value = "/{id}")
+    public PostInfoTO writePost(@PathVariable Long id, @RequestBody WritePostTO writePostTO) {
+        return issueService.writePost(id, writePostTO);
+    }
 }
